@@ -3,9 +3,7 @@ package emotionalsongs;
 /*
  * Progetto svolto da:
  * 
- * Bengazha Ahmed 748174, Ateneo di Varese
  * Della Chiesa Mattia 749904, Ateneo di Varese
- * Eulo Daniele <Matricola>, Ateneo di Varese
  *
  */
 

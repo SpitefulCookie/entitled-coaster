@@ -82,8 +82,6 @@ class RepositoryManager{
         String input;
         Scanner in = TextUtils.getScanner();
 
-        TextUtils.cls();
-
         do{
             TextUtils.printLogo("RICERCA CANZONE", 3);
             //System.out.println(TextUtils.BLUE + "\t\tRICERCA CANZONE\n" + TextUtils.RESET);
@@ -92,8 +90,6 @@ class RepositoryManager{
             input = in.nextLine();
             
         }while(input.equals("1") && input.equals("2"));
-
-        TextUtils.cls();
         
         if(input.equals("1")){ // EFFETTUA UNA RICERCA UTILIZZANDO IL TITOLO DELLA CANZONE
 
@@ -181,9 +177,9 @@ class RepositoryManager{
             
             canzoniTrovate = cercaBranoMusicale();
     
-            if(canzoniTrovate.isEmpty()){
+            if(canzoniTrovate.isEmpty()){ // togliere il not!!!
     
-                System.out.print("Non sono state trovate canzoni all'interno della repository.\nVuoi effettuare un'altra ricerca? s/n\nScelta: ");
+                System.out.print("Non sono state trovate canzoni all'interno della repository oppure sono stati restituiti troppi risultati.\nVuoi effettuare un'altra ricerca? s/n\nScelta: ");
                 sceltaBoolean = TextUtils.readYesOrNo();
     
             }
@@ -230,13 +226,19 @@ class RepositoryManager{
                 System.out.print("Vuoi tornare indietro? s/n\nScelta: ");
                 sceltaBoolean = TextUtils.readYesOrNo();
     
-            }else {TextUtils.printErrorMessage("Il comando inserito non è stato riconosciuto, inserire nuovamente. Premere un tasto per continuare...", false); in.nextLine();}
+            }else {TextUtils.printErrorMessage("Il comando inserito non è stato riconosciuto. Premere un tasto per continuare...", false); in.nextLine();}
     
         }
     
     }       
 
     private List<SearchResult> cercaBranoMusicale(String titolo){ //Effettua una ricerca della canzone per titolo
+
+         /*
+          * La funzione itera all'interno della repository delle canzoni e per ogni canzone ne ottiene il 
+          * titolo e lo compara con il titolo ricercato privato di duplicati. 
+          * 
+          */
 
         ArrayList<SearchResult> canzoniTrovate = new ArrayList<>();
 
@@ -250,10 +252,10 @@ class RepositoryManager{
             occorrenze = 0;
 
             /*
-                * Verifica subito se il titolo della canzone abbia un match del 100% così evitando ulteriori costi computazionali;
-                * il valore 101 è stato immesso puramente per assicurare che il risultato sia posto in cima alla lista.
-                * 
-                */
+             * Verifica subito se il titolo della canzone abbia un match del 100% così evitando ulteriori costi computazionali;
+             * il valore 101 è stato immesso puramente per assicurare che il risultato sia posto in cima alla lista.
+             * 
+             */
 
             if(c.getTitolo().toLowerCase().equalsIgnoreCase(titolo)){ 
                 
@@ -261,7 +263,8 @@ class RepositoryManager{
 
             } else{
 
-                titoloEstratto = RepositoryManager.removeDuplicate(c.getTitolo().toLowerCase().split(" "));
+                //titoloEstratto = RepositoryManager.removeDuplicate(c.getTitolo().toLowerCase().split(" "));
+                titoloEstratto = c.getTitolo().toLowerCase().split(" ");
 
                 for(int i = 0; i<titoloEstratto.length; i++){
 
@@ -273,9 +276,18 @@ class RepositoryManager{
 
                 }
                 
-                if(occorrenze!=0 && ((float)occorrenze/titoloRicerca.length)*100>SEARCH_THRESHOLD){ // Prende solamente i valori che hanno un uguaglianza maggiore del 40%
-                    canzoniTrovate.add(new SearchResult(c, ((float)occorrenze/titoloRicerca.length)*100));
+                if(occorrenze!=0 && ((double)occorrenze/titoloEstratto.length*100)>SEARCH_THRESHOLD){ // Prende solamente i valori che hanno un uguaglianza maggiore del 40%
+                    //canzoniTrovate.add(new SearchResult(c, ((float)occorrenze/titoloRicerca.length)*100));
+                    canzoniTrovate.add(new SearchResult(c, ((double)occorrenze/titoloEstratto.length*100)));
+
+                    TextUtils.printDebug("Titolo: " + c.getTitolo());
+                    TextUtils.printDebug("\tOccorrenze: " + occorrenze + "\n\t\ttitoloRicerca.length: " +titoloRicerca.length + "\n\t\tc.getTitolo().length(): " + titoloEstratto.length);
+                    
+                    TextUtils.printDebug("\tOld score: " + (((float)occorrenze/titoloRicerca.length)*100) );
+                    System.out.println(); //DEBUG
+
                 }
+
             }
 
         }

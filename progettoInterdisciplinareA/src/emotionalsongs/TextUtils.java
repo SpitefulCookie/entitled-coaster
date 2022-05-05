@@ -53,9 +53,15 @@ public class TextUtils {
         
     }
 
-    public static void cls() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
+    public static void cls() { 
+
+        if(!debug){
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
+        } else{
+            TextUtils.printDebug("\n" + StringUtils.repeat("-", 100)+"\n\t\t\tIn questo punto avviene un cls()!\n" + StringUtils.repeat("-", 100));
+        }
+
     }  
 
     public static String formatTitleCapital(String str){

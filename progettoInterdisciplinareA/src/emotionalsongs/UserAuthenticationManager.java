@@ -137,7 +137,34 @@ public class UserAuthenticationManager {
         
     }
 
-    public static Utente loginUtente(String userId, String password){
+    public static Utente loginUtente(){
+
+        Scanner in = TextUtils.getScanner();
+        String userId;
+        String password;
+
+        TextUtils.printLogo("LOGIN UTENTE", 2);
+        System.out.print("Inserisci il tuo nome utente: ");
+
+        do{
+            userId = in.nextLine();
+
+            if(TextUtils.isEmptyString(userId)){
+                TextUtils.printErrorMessage("E' stato inserito un valore non ammesso, inserire nuovamente: ", false);
+            }
+
+        } while(!TextUtils.isEmptyString(userId));
+
+        System.out.print("Inserisci la tua password: ");
+
+        do{
+            password = in.nextLine();
+
+            if(TextUtils.isEmptyString(password)){
+                TextUtils.printErrorMessage("E' stato inserito un valore non ammesso, inserire nuovamente: ", false);
+            }
+
+        } while(!TextUtils.isEmptyString(password));
 
         try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
 
@@ -167,7 +194,7 @@ public class UserAuthenticationManager {
 
         } catch (IOException e)  {
 
-            System.out.println(TextUtils.RED + "Impossibile effettuare il login, non è stato trovato l'archivio utenti."+TextUtils.RESET);
+           TextUtils.printErrorMessage("Impossibile effettuare il login, non è stato trovato l'archivio utenti.", true);
 
         } 
 

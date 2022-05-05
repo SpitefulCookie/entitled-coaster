@@ -1,5 +1,7 @@
 package emotionalsongs;
 
+import java.util.Scanner;
+
 //import java.util.List;
 
 /*
@@ -12,34 +14,93 @@ package emotionalsongs;
 
 public class EmotionalSongs{
 
-    private static RepositoryManager repository;
-
     public static void main(String[] args) {
 
-        repository = new RepositoryManager();
+        if(args.length!=0) TextUtils.setDebug(args[0]);
 
-        //Utente utenteConnesso = null;
+        RepositoryManager songRepository = new RepositoryManager();
+        Scanner in = TextUtils.getScanner();
 
-        //System.out.println("\nRicerca canzoni:\n\n");
-        //List<Canzone> canzoni = RepositoryHandler.cercaBranoMusicale(); 
-
-        /*Playlist p = Playlist.registraPlaylist("userId");
-
-        for(Canzone canzone : canzoni){
-
-            System.out.print("Sto aggiungendo: \t");
-            System.out.println(canzone.toString());
-            p.addCanzone(canzone);
-            
-        }*/
-
-        //EmotionalSongs.printMenu(false);
+        Utente loggedUser = null;
+        String input;
 
         TextUtils.setDebug(true);
 
-        //repository.cercaBranoMusicale();
-        
-        //Playlist.registraPlaylist("userId");
+        boolean exit = false;
+
+        do{
+
+            EmotionalSongs.printMenu(loggedUser);
+            System.out.println("Inserire un numero per selezionare l'opzione desiderata oppure 'exit' per uscire dall'applicazione.");
+            
+            do{ //ponibile in un metodo a sè
+
+                System.out.print("Scelta: ");
+
+                input = in.nextLine();
+
+                if(TextUtils.isEmptyString(input)){
+
+                    TextUtils.printErrorMessage("Il valore inserito non è valido. Premere un tasto per continuare", false);
+                    in.nextLine();
+
+                }
+
+            } while(TextUtils.isEmptyString(input));
+
+            if(TextUtils.isNumeric(input)){
+
+                switch(Integer.parseInt(input)){
+
+                    case(1):
+
+                        songRepository.consultaRepository();
+
+                        break;
+
+                    case(2):
+
+                        if(loggedUser != null){
+                            
+                            loggedUser = null;
+
+                            System.out.println("E' stato effettuato il logout!");
+
+                        }else{loggedUser = UserAuthenticationManager.loginUtente();} // rivedere!!!!
+
+                        break;
+
+                    case (3):
+
+                        if(loggedUser==null){ loggedUser = UserAuthenticationManager.Registrazione();} // refactorare con nuovo look!
+
+                        break;
+
+                    default:
+
+                        TextUtils.printErrorMessage("Il valore inserito non è valido. Premere un tasto per continuare", false);
+                        in.nextLine();
+
+                        break;
+
+                
+                }
+
+            } else{
+
+                if(input.equalsIgnoreCase("exit")){
+
+                    TextUtils.printLogo("\nArrivederci, grazie per aver utilizzato la nostra piattaforma!", 0);
+                    //System.out.println("Arrivederci, grazie per aver utilizzato la nostra piattaforma!");
+                    exit = true;
+
+                }
+
+            }
+
+        } while(!exit);
+                
+        //Playlist.registraPlaylist("userId", songRepository);
 
         //RepositoryHandler.cercaBranoMusicale();  
         
@@ -51,22 +112,25 @@ public class EmotionalSongs{
         
     }
 
-    private static void printMenu(boolean connected){
+    private static void printMenu(Utente user){
 
         TextUtils.printLogo("MENU PRINCIPALE", 3);
         
         System.out.println("\t   [" + TextUtils.BLUE_BOLD +"1"+ TextUtils.WHITE_BOLD + "] Consulta repository canzoni");
         System.out.print("\t   [" + TextUtils.BLUE_BOLD +"2"+ TextUtils.WHITE_BOLD + "] Effettua il");
 
-        if(!connected){
+        if(user==null){
             System.out.println(" login");
             System.out.println("\t   [" + TextUtils.BLUE_BOLD +"3"+ TextUtils.WHITE_BOLD+ "] Registrati all'applicazione");
+
         } else{
             
             System.out.println(" logout");
             System.out.println(TextUtils.RED + "\t   [3] Registrati all'applicazione" +  TextUtils.RESET);
     
         }
+
+        System.out.println();
 
     }
 

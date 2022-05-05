@@ -12,6 +12,9 @@ public class Playlist{
     private LinkedList<Canzone> canzoni;
     private String nome;
     private String user;
+
+    private static final String RICERCA_CANZONI = "RICERCA CANZONI"; 
+    private static final String CREAZIONE_PLAYLIST = "CREAZIONE PLAYLIST"; 
     
     public Playlist(String nomePlaylist, Canzone canzone, String userid){
 
@@ -46,20 +49,18 @@ public class Playlist{
 
     public void addCanzone(Canzone canzone){this.canzoni.add(canzone);}
 
-    public Playlist registraPlaylist(String userId){
+    public static Playlist registraPlaylist(String userId, RepositoryManager repository){
 
         // per creare una playlist l'utente registrato deve inserire il nome della playlist e l'elenco di brani da aggiungere. o brani singoli o brani di un autore specifico
-        TextUtils.printLogo("CREAZIONE PLAYLIST", 2);
+        TextUtils.printLogo(CREAZIONE_PLAYLIST, 2);
         System.out.print("Inserire il nome della playlist: ");
         Scanner in = TextUtils.getScanner();
         String input;
 
-        RepositoryManager repository = new RepositoryManager();
-
         do{
    
             input = in.nextLine();
-            //if(TextUtils.isEmptyString(input)){TextUtils.printErrorMessage("E' stato immesso un valore non valido, inserire nuovamente: ");}
+            if(TextUtils.isEmptyString(input)){TextUtils.printErrorMessage("E' stato immesso un valore non valido, inserire nuovamente: ", false);}
 
         } while(TextUtils.isEmptyString(input));
 
@@ -92,7 +93,7 @@ public class Playlist{
 
             while(!sceltaBoolean){ // Il ciclo while continuerà finché non è stato confermata la scelta
 
-                TextUtils.printLogo("RICERCA CANZONI", 3);
+                TextUtils.printLogo(RICERCA_CANZONI, 3);
     
                 TextUtils.printDebug("Numero risultati ottenuti: " + canzoniTrovate.size()+"\n");
 
@@ -112,175 +113,107 @@ public class Playlist{
 
                 if(TextUtils.isNumeric(input)){
 
+                    Canzone canzoneScelta = null;
+                    sceltaBoolean = false;
+
                     switch (Integer.parseInt(input)) {
+
                         case (1):
 
-                            TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
                             System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((1+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
                             sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            if(sceltaBoolean){
-                                
-                                playlist.addCanzone(canzoniTrovate.get((1+(9*pagina))-1));
-
-                                TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                                System.out.println("La canzone " + canzoniTrovate.get((1+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                            }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((1+(9*pagina))-1);}
     
                             break;
 
                         case (2):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((2+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((2+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((2+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((2+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((2+(9*pagina))-1);}
 
                             break;
 
                         case (3):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((3+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((3+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((3+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((3+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((3+(9*pagina))-1);}
 
                             break;
 
                         case (4):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((4+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((4+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((4+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((4+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((4+(9*pagina))-1);}
 
                             break;
 
                         case (5):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((5+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((5+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((5+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((5+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((5+(9*pagina))-1);}
 
                             break;
 
                         case (6):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((6+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((6+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((6+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((6+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((6+(9*pagina))-1);}
 
                             break;
 
                         case (7):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((7+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((7+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((7+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((7+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((7+(9*pagina))-1);}
 
                             break;
 
                         case (8):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((8+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((8+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((8+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone " + canzoniTrovate.get((8+(9*pagina))-1).getTitolo() + " e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((8+(9*pagina))-1);}
 
                             break;
 
                         case (9):
 
-                        TextUtils.printLogo("RICERCA CANZONI", 3);
+                            TextUtils.printLogo(RICERCA_CANZONI, 3);
 
-                        System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((9+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
-                        sceltaBoolean = TextUtils.readYesOrNo();
-                        
-                        if(sceltaBoolean){
+                            System.out.print("E' stata scelta la canzone:\n\n\t" + canzoniTrovate.get((9+(9*pagina))-1).toString()+"\n\nConfermare? s/n\nScelta: ");
+                            sceltaBoolean = TextUtils.readYesOrNo();
                             
-                            playlist.addCanzone(canzoniTrovate.get((9+(9*pagina))-1));
-
-                            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
-
-                            System.out.println("La canzone \"" + canzoniTrovate.get((9+(9*pagina))-1).getTitolo() + "\" e' stata aggiunta alla playlist!");
-
-                        }
+                            if(sceltaBoolean){canzoneScelta = canzoniTrovate.get((9+(9*pagina))-1);}
     
                             break;
                     
@@ -291,6 +224,17 @@ public class Playlist{
 
                             break;
                     }
+
+                    if(sceltaBoolean){
+                                
+                        playlist.addCanzone(canzoneScelta);
+
+                        TextUtils.printLogo(CREAZIONE_PLAYLIST, 3);
+
+                        System.out.println("La canzone \"" + canzoneScelta.getTitolo() + "\" e' stata aggiunta alla playlist!");
+
+                    }
+                    
 
                 } else{ // ripulire il seguente blocco di codice
 
@@ -306,7 +250,7 @@ public class Playlist{
 
                     } else if(input.equalsIgnoreCase("cancel")){
 
-                        TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
+                        TextUtils.printLogo( CREAZIONE_PLAYLIST, 3);
 
                         System.out.print("Vuoi annullare l'inserimento delle canzoni all'interno della playlist? s/n\nScelta: ");
                         sceltaBoolean = TextUtils.readYesOrNo();
@@ -341,7 +285,7 @@ public class Playlist{
 
         if(!playlist.isEmpty()){
 
-            TextUtils.printLogo( "CREAZIONE PLAYLIST", 3);
+            TextUtils.printLogo( CREAZIONE_PLAYLIST, 2);
 
             System.out.println("All'interno della playlist ci sono " + playlist.getSize() + " canzoni:\n");
 
@@ -390,7 +334,7 @@ class PlaylistManager {
     
     private PlaylistManager(){super();}
 
-    public static void scriviPlaylist(Playlist p){
+    public static void scriviPlaylist(Playlist p){ // implementare!!!
 
         try{
 

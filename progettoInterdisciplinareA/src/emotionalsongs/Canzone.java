@@ -32,6 +32,8 @@ class Canzone{
 
         if(dati.contains("\"")){
 
+            TextUtils.printDebug("Trovato un valore contenente una virgola!");
+
             String result = dati;
             String value;
 
@@ -41,16 +43,19 @@ class Canzone{
             do{
 
                 begin = dati.indexOf("\"", last+1);
-                TextUtils.printDebug("Begin index: " +  begin);
 
                 if(begin!=-1){
 
                     last = dati.indexOf('\"', begin+1);
-                    TextUtils.printDebug("Last index: " +  last);
+
+                    TextUtils.printDebug("Indice inizio stringa: " +  begin + "\tIndice fine stringa: " +  last);
 
                     if(last!=-1){
 
                         value = dati.substring(begin+1, last).replace(',', '§');
+
+                        TextUtils.printDebug("Valore estratto: " + value);
+                        
                         result = result.replace(dati.substring(begin, last+1), value);
 
                     }

@@ -2,7 +2,7 @@ package emotionalsongs;
 
 import java.util.Scanner;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;;
 
 public class TextUtils {
 
@@ -33,7 +33,25 @@ public class TextUtils {
     public static final String CYAN_BOLD = "\033[1;36m";   // CYAN
     public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
     
-    public static void setDebug(boolean value){debug = value; TextUtils.printDebug("Debug mode is now set to " + value);}
+    public static void setDebug(String value){
+
+        if(value.equalsIgnoreCase("true")){
+            debug = true; 
+            TextUtils.printDebug("Debug mode is now enabled");
+        }else if (value.equalsIgnoreCase("false")){
+            debug = false; 
+            TextUtils.printDebug("Debug mode is now disabled");
+        }
+    }
+
+    public static void setDebug(boolean value){
+    
+        debug = value; 
+
+        if(value){TextUtils.printDebug("Debug mode is now enabled");}
+        else{TextUtils.printDebug("Debug mode is now disabled");}
+        
+    }
 
     public static void cls() {  
         System.out.print("\033[H\033[2J");  

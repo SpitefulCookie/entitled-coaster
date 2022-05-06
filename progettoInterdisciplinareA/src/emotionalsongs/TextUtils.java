@@ -88,6 +88,54 @@ public class TextUtils {
 
     }
 
+    /**
+	 * Validates a regular CF.
+	 * @param cf Normalized, 16 characters CF.
+	 * @return {@code true} if valid, or {@code false} if the CF must be rejected.
+     * @author Umberto Salsi <salsi@icosaedro.it>
+     * @see Source: http://www.icosaedro.it/cf-pi/vedi-codice.cgi?f=cf-java.txt
+     *
+	 */
+    public static boolean isValidCF(String cf){ 
+
+		if(!cf.matches("^[0-9A-Z]{16}$")){
+            TextUtils.printDebug("Il codice fiscale contiene caratteri non ammessi");
+			return false;
+        }
+
+		int somma = 0;
+		String evenMap = "BAFHJNPRTVCESULDGIMOQKWZYX";
+
+		for(int i = 0; i < 15; i++){
+
+			int charIntValue = cf.charAt(i);
+			int idxEvenMap;
+
+			if('0' <= charIntValue && charIntValue <= '9' ){
+				idxEvenMap = charIntValue - '0';
+            }else{
+				idxEvenMap = charIntValue - 'A';
+            }
+
+			if( (i & 1) == 0 ){
+				idxEvenMap = evenMap.charAt(idxEvenMap) - 'A';
+            }
+
+			somma += idxEvenMap;
+
+		}
+
+		if(somma%26 + 'A' != cf.charAt(15)){
+            TextUtils.printDebug("Il codice fiscale ha fallito il checksum.");
+            return false;
+        }
+
+        TextUtils.printDebug("Il codice fiscale e' valido");
+
+		return true;
+
+	}
+
     public static boolean isEmptyString(String input){return StringUtils.isAllBlank(input);}
 
     public static boolean isNumeric(String input){return StringUtils.isNumeric(input);}
@@ -100,7 +148,6 @@ public class TextUtils {
         else{System.out.print("[" + TextUtils.RED + "ERRORE" + TextUtils.RESET + "] " + string);}
 
     }
-
     
     public static boolean readYesOrNo() {
 
@@ -161,5 +208,9 @@ public class TextUtils {
 
     }
 
+    public static void pause(){
+        System.out.print(" Premere un tasto per continuare...");
+        TextUtils.getScanner().nextLine();
+    }
 }
 

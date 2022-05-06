@@ -18,26 +18,25 @@ import java.util.UUID;
 class RepositoryManager{
 
     private static final DecimalFormat DF = new DecimalFormat("#.##");
+    
+    //Search constants:
     private static final String SONG_REPOSITORY = "progettoInterdisciplinareA\\data\\Canzoni.dati";
-    //private static final int UUID_LENGTH = 36;
-    private static final double SEARCH_THRESHOLD = 40; 
+    private static final double SEARCH_THRESHOLD = 40;
     public static final int MAX_SEARCH_RESULTS = 27;
 
+
+    //Subtitle constants:
+    private static final String RICERCA_CANZONE = "RICERCA CANZONE";
+
+    //Class variables
     private LinkedList<Canzone> repository;
 
     public RepositoryManager(){
         
         this.repository = new LinkedList<>();
 
-        if(initRepository(this.repository)){
-
-            TextUtils.printDebug("Repository inizializzata correttamente!");
-
-        } else{
-
-            TextUtils.printDebug("Errore IO");
-
-        }
+        if(initRepository(this.repository)){TextUtils.printDebug("Repository inizializzata correttamente!");
+        } else{TextUtils.printDebug("Errore IO");}
        
     }
 
@@ -83,8 +82,8 @@ class RepositoryManager{
         Scanner in = TextUtils.getScanner();
 
         do{
-            TextUtils.printLogo("RICERCA CANZONE", 3);
-            //System.out.println(TextUtils.BLUE + "\t\tRICERCA CANZONE\n" + TextUtils.RESET);
+            TextUtils.printLogo(RICERCA_CANZONE, 3);
+            
             System.out.print("Seleziona il metodo di ricerca:\n\n\t[1] Ricerca per titolo\n\t[2] Ricerca per autore e anno\n\nScelta: ");
 
             input = in.nextLine();
@@ -93,32 +92,42 @@ class RepositoryManager{
         
         if(input.equals("1")){ // EFFETTUA UNA RICERCA UTILIZZANDO IL TITOLO DELLA CANZONE
 
-            TextUtils.printLogo("RICERCA CANZONE", 3);
-            //System.out.println(TextUtils.BLUE + "\t\tRICERCA CANZONE\n" + TextUtils.RESET);
+            TextUtils.printLogo(RICERCA_CANZONE, 3);
+
             System.out.print("Inserisci il titolo della canzone: ");
 
             do{
 
                 input = in.nextLine();
 
-            }while(input.equals("") || input.equals(" "));
+                if(TextUtils.isEmptyString(input)){
+                    TextUtils.printErrorMessage("E' stato inserito un valore nullo o non valido, inserire nuovamente: ", false);
+                }
+
+            }while(TextUtils.isEmptyString(input));
 
             TextUtils.printDebug("Sto ricercando: " + input);
 
             return RepositoryManager.ordinaRisultati(cercaBranoMusicale(input));
 
             
-        } else{
+        } else{ // EFFETTUA UNA RICERCA UTILIZZANDO L'AUTORE E L'ANNO
 
             String autore;
-            System.out.println(TextUtils.BLUE + "\t\tRICERCA CANZONE" + TextUtils.RESET);
+
+            TextUtils.printLogo(RICERCA_CANZONE, 3);
+
             System.out.print("Inserisci il nome dell'autore: ");
 
             do{
 
                 autore = in.nextLine();
 
-            }while(autore.equals("") || autore.equals(" "));
+                if(TextUtils.isEmptyString(input)){
+                    TextUtils.printErrorMessage("E' stato inserito un valore nullo o non valido, inserire nuovamente: ", false);
+                }
+
+            }while(TextUtils.isEmptyString(input));
 
             System.out.print("Inserisci l'anno di pubblicazione: ");
 
@@ -126,111 +135,17 @@ class RepositoryManager{
 
                 input = in.nextLine();
 
-            }while(input.equals("") || input.equals(" "));
+                if(!TextUtils.isNumeric(input)){
+                    TextUtils.printErrorMessage("E' stato inserito un valore nullo o non valido, inserire nuovamente: ", false);
+                }
 
-            return RepositoryManager.ordinaRisultati(RepositoryManager.cercaBranoMusicale(autore, input));
+            }while(!TextUtils.isNumeric(input));
+
+            return ordinaRisultati(cercaBranoMusicale(autore, Integer.parseInt(input)));
 
         }
        
     }
-
-    private static List<Canzone> ordinaRisultati(List<SearchResult> risultati){
-
-        SearchResult temp;
-        int n = risultati.size();
-
-        for(int i=0; i < n; i++){ 
-
-            for(int j=1; j < (n-i); j++){
-
-                if(risultati.get(j-1).compareTo(risultati.get(j)) < 0 ){  
-                    
-                    temp = risultati.get(j-1); 
-
-                    risultati.set(j-1, risultati.get(j)); 
-
-                    risultati.set(j, temp);  
-
-                }  
-                
-            } 
-
-        }  
-        
-        for(SearchResult c : risultati){
-            TextUtils.printDebug(c.getCanzone().toString()+"\n\tPercentage: " + DF.format(c.getPercentage())+"%");
-        }
-
-        return SearchResult.toCanzoni(risultati);
-    }
-
-    public void consultaRepository(){
-
-        Scanner in = TextUtils.getScanner();
-        String input;
-
-        boolean sceltaBoolean = true;
-
-        List<Canzone> canzoniTrovate;
-    
-        do {
-            
-            canzoniTrovate = cercaBranoMusicale();
-    
-            if(canzoniTrovate.isEmpty()){ // togliere il not!!!
-    
-                System.out.print("Non sono state trovate canzoni all'interno della repository oppure sono stati restituiti troppi risultati.\nVuoi effettuare un'altra ricerca? s/n\nScelta: ");
-                sceltaBoolean = TextUtils.readYesOrNo();
-    
-            }
-    
-        } while (canzoniTrovate.isEmpty() && sceltaBoolean);
-    
-        int pagina = 0;
-        sceltaBoolean = false;
-    
-        while(!sceltaBoolean){
-    
-            TextUtils.printLogo("CONSULTA REPOSITORY", 1);
-    
-            TextUtils.printDebug("Numero risultati ottenuti: " + canzoniTrovate.size()+"\n");
-    
-            for (int i = 0; i < 9 && i<canzoniTrovate.size(); i++) { //effettua il print delle prime n canzoni dove n = i+(pagina*9) (n è un indice)
-                
-                System.out.println("\t[" + TextUtils.BLUE_BOLD + (i+1) + TextUtils.RESET + "] " + canzoniTrovate.get(i+(pagina*9)).toString());
-                
-            }
-    
-            System.out.print("\n\t\t   [Pagina " + (pagina+1) + " di " + (int)Math.ceil((canzoniTrovate.size()/9.00)) +"]\n\n");
-    
-            System.out.print("Inserisci 'next' o 'previous' per navigare tra le pagine dei risultati oppure 'cancel' per tornare indietro.");
-    
-            System.out.print("\nScelta: ");
-    
-            input = in.nextLine();
-    
-            if(input.equalsIgnoreCase("previous")){
-    
-                if(pagina>0){pagina--;} else{TextUtils.printErrorMessage("Non ci sono pagine precedenti. Premere un tasto per continuare...", false); in.nextLine();}
-                
-    
-            } else if(input.equalsIgnoreCase("next")){
-    
-                if(pagina == (Math.ceil((canzoniTrovate.size()/9.00))-1)){TextUtils.printErrorMessage("Non ci sono altre pagine. Premere un tasto per continuare...", false); in.nextLine();} else{pagina++;}
-    
-    
-            } else if(input.equalsIgnoreCase("cancel")){
-    
-                TextUtils.printLogo( "CONSULTA REPOSITORY", 1);
-    
-                System.out.print("Vuoi tornare indietro? s/n\nScelta: ");
-                sceltaBoolean = TextUtils.readYesOrNo();
-    
-            }else {TextUtils.printErrorMessage("Il comando inserito non è stato riconosciuto. Premere un tasto per continuare...", false); in.nextLine();}
-    
-        }
-    
-    }       
 
     private List<SearchResult> cercaBranoMusicale(String titolo){ //Effettua una ricerca della canzone per titolo
 
@@ -296,6 +211,22 @@ class RepositoryManager{
 
     }
     
+    private List<SearchResult> cercaBranoMusicale(String autore, int anno){ //Effettua una ricerca della canzone per autore e anno
+
+        ArrayList<SearchResult> canzoni = new ArrayList<>();
+        
+        for(Canzone c : this.repository){
+
+            if(c.getAutore().equalsIgnoreCase(autore) && c.getAnno() == anno){
+                canzoni.add(new SearchResult(c));
+            }
+
+        }
+
+        return canzoni;
+
+    }
+
     private static String[] removeDuplicate(String[] words) {
 
         Set<String> wordSet = new LinkedHashSet<>();
@@ -306,33 +237,103 @@ class RepositoryManager{
 
     }
 
-    private static List<SearchResult> cercaBranoMusicale(String autore, String anno){
+    private static List<Canzone> ordinaRisultati(List<SearchResult> risultati){
 
-        ArrayList<SearchResult> canzoni = new ArrayList<>();
+        SearchResult temp;
+        int n = risultati.size();
+
+        for(int i=0; i < n; i++){ 
+
+            for(int j=1; j < (n-i); j++){
+
+                if(risultati.get(j-1).compareTo(risultati.get(j)) < 0 ){  
+                    
+                    temp = risultati.get(j-1); 
+
+                    risultati.set(j-1, risultati.get(j)); 
+
+                    risultati.set(j, temp);  
+
+                }  
+                
+            } 
+
+        }  
         
-        try (BufferedReader br = new BufferedReader(new FileReader(SONG_REPOSITORY))) {
+        for(SearchResult c : risultati){
+            TextUtils.printDebug(c.getCanzone().toString()+"\n\tPercentage: " + DF.format(c.getScore())+"%");
+        }
 
-            String line;
-
-            while ((line = br.readLine()) != null) {
-
-                if(line.contains(autore) && line.contains(anno+"")){ //ottimizzabile? e modificabile!
-                   
-                   //canzoni.add(new Canzone(line));
-
-                }
-
-            }
-
-        } catch (IOException e)  {
-
-            e.printStackTrace();
-
-        } 
-
-        return canzoni;
-
+        return SearchResult.toCanzoni(risultati);
     }
+
+    public void consultaRepository(){
+
+        Scanner in = TextUtils.getScanner();
+        String input;
+
+        boolean sceltaBoolean = true;
+
+        List<Canzone> canzoniTrovate;
+    
+        do {
+            
+            canzoniTrovate = cercaBranoMusicale();
+
+            TextUtils.printDebug("Sono stati trovati " + canzoniTrovate.size() + " risultati");
+    
+            if(canzoniTrovate.isEmpty()){
+    
+                System.out.print("Non sono state trovate canzoni all'interno della repository oppure sono stati restituiti troppi risultati.\nVuoi effettuare un'altra ricerca? s/n\nScelta: ");
+                sceltaBoolean = TextUtils.readYesOrNo();
+    
+            }
+    
+        } while (canzoniTrovate.isEmpty() && sceltaBoolean);
+
+        if(!sceltaBoolean){return;}
+    
+        int pagina = 0;
+        sceltaBoolean = false;
+    
+        while(!sceltaBoolean){
+    
+            TextUtils.printLogo("CONSULTA REPOSITORY", 1);
+    
+            TextUtils.printDebug("Numero risultati ottenuti: " + canzoniTrovate.size()+"\n");
+    
+            for (int i = 0; i < 9 && i<canzoniTrovate.size(); i++) {System.out.println("\t[" + TextUtils.BLUE_BOLD + (i+1) + TextUtils.RESET + "] " + canzoniTrovate.get(i+(pagina*9)).toString());}
+    
+            System.out.print("\n\t\t   [Pagina " + (pagina+1) + " di " + (int)Math.ceil((canzoniTrovate.size()/9.00)) +"]\n\n");
+    
+            System.out.print("Inserisci 'next' o 'previous' per navigare tra le pagine dei risultati oppure 'cancel' per tornare indietro.");
+    
+            System.out.print("\nScelta: ");
+    
+            input = in.nextLine();
+    
+            if(input.equalsIgnoreCase("previous")){
+    
+                if(pagina>0){pagina--;} else{TextUtils.printErrorMessage("Non ci sono pagine precedenti.", true); TextUtils.pause();}
+                
+    
+            } else if(input.equalsIgnoreCase("next")){
+    
+                if(pagina == (Math.ceil((canzoniTrovate.size()/9.00))-1)){TextUtils.printErrorMessage("Non ci sono altre pagine.", true); TextUtils.pause();} else{pagina++;}
+    
+    
+            } else if(input.equalsIgnoreCase("cancel")){
+    
+                TextUtils.printLogo( "CONSULTA REPOSITORY", 1);
+    
+                System.out.print("Vuoi tornare indietro? s/n\nScelta: ");
+                sceltaBoolean = TextUtils.readYesOrNo();
+    
+            }else {TextUtils.printErrorMessage("Il comando inserito non è stato riconosciuto", true); TextUtils.pause();}
+    
+        }
+    
+    }       
 
     public static String generateUUID(String in){
 
@@ -396,12 +397,19 @@ class SearchResult implements Comparable<SearchResult>{
         this.score = value;
     }
 
-    public SearchResult(Canzone canzone, double value){
-        this.canzone = canzone;
+    public SearchResult(Canzone canzoneTrovata, double value){
+        this.canzone = canzoneTrovata;
         this.score = value;
     }
 
-    public double getPercentage(){
+    public SearchResult(Canzone canzoneTrovata) {
+
+        this.canzone = canzoneTrovata;
+        this.score = -1;
+
+    }
+
+    public double getScore(){
         return this.score;
     }
 
@@ -412,11 +420,11 @@ class SearchResult implements Comparable<SearchResult>{
     @Override
     public int compareTo(SearchResult o) {
 
-        if(this.score == o.getPercentage()){
+        if(this.score == o.getScore()){
 
             return 0;
 
-        } else if(this.score<o.getPercentage()){
+        } else if(this.score<o.getScore()){
 
             return -1;
 

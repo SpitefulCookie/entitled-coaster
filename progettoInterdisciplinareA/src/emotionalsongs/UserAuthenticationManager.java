@@ -11,6 +11,8 @@ import java.util.Scanner;
 public class UserAuthenticationManager {
 
     private static final String USER_FILE = "progettoInterdisciplinareA\\data\\UtentiRegistrati.dati";
+    private static final String REGISTRATION = "SIGN UP";
+    private static final int REGISTRATION_PADDING = 7;
     
     private UserAuthenticationManager() {super();}
 
@@ -22,28 +24,47 @@ public class UserAuthenticationManager {
 
         Scanner in = TextUtils.getScanner();
 
-        System.out.println("\tREGISTRAZIONE UTENTE\n");
+        TextUtils.printLogo(REGISTRATION, REGISTRATION_PADDING);
+
+        do{ // controlli sul nominativo
         
-        System.out.print("Inserisci il tuo nome e cognome separati da uno spazio: ");
+            System.out.print("Inserisci il tuo nome e cognome separati da uno spazio: ");
 
-        str = in.nextLine();
-
-        str = TextUtils.stripCommas(str);
-
-        user.setNominativo( TextUtils.formatTitleCapital(str));
-
-        // assicura che il CF abbia lunghezza pari a 16 caratteri
-        do{
-
-            System.out.print("Inserisci il tuo codice fiscale: ");
-
-            str = in.nextLine().toUpperCase();
+            str = in.nextLine();
 
             str = TextUtils.stripCommas(str);
 
-            if(str.length() != 1){System.out.println("Il codice fiscale deve essere lungo 16 caratteri\n");} //DEBUG SET TO 1
+            if((str.split(" ").length <2)){TextUtils.printErrorMessage("E' stato inserito un valore che non rispecchia le specifiche richieste.", true);}
 
-        } while(str.length() != 1); // IDEM
+        } while (str.split(" ").length <2);
+
+        user.setNominativo(TextUtils.formatTitleCapital(str));
+
+        boolean valid = false;
+
+        do{ // controlli sul codice fiscale
+
+            do{
+
+                System.out.print("Inserisci il tuo codice fiscale: ");
+
+                str = in.nextLine().toUpperCase();
+
+                if(str.length() != 16){TextUtils.printErrorMessage("Il codice fiscale dev'essere lungo 16 caratteri.", true);} 
+
+            } while(str.length() != 16);
+
+            valid = TextUtils.isValidCF(str);
+
+            if(!valid){TextUtils.printErrorMessage("Il valore inserito non rappresenta un codice fiscale regolare.", false); TextUtils.pause();}
+
+        }while(!valid);
+
+        if(esisteCF(str)){ // verifica se esiste il codice fiscale
+            TextUtils.printErrorMessage("Esiste gia' un utente con quel codice fiscale, effettuare il login.", true);
+            TextUtils.pause();
+            return null;
+        }
 
         user.setCodiceFiscale(str);
 
@@ -68,10 +89,11 @@ public class UserAuthenticationManager {
         user.setIndirizzo(indirizzo);
 
         System.out.print("Inserisci il tuo indirizzo email: ");
-        do{
+
+        do{ // controlli di base sull'indirizzo email
         
             str = in.nextLine();
-            if(str.contains(",") && !str.contains("@")){TextUtils.printErrorMessage("L'indirizzo emaiil inserito non e' valido\nInserire nuovamente: ",true);}
+            if(str.contains(",") && !str.contains("@")){TextUtils.printErrorMessage("L'indirizzo email inserito non e' valido\nInserire nuovamente: ",true);}
 
         } while(str.contains(",") && !str.contains("@"));
 
@@ -79,14 +101,14 @@ public class UserAuthenticationManager {
         
         boolean userIdExists = true;
 
-        do{
+        do{ // controlli sul nome utente (univoco)
 
             System.out.print("Inserisci il tuo nome utente: ");
 
             str = in.nextLine();
             str = TextUtils.stripCommas(str);
 
-            userIdExists = UserAuthenticationManager.esiste(str);
+            userIdExists = UserAuthenticationManager.utenteEsiste(str);
 
             if(userIdExists){
                 System.out.println("L'username inserito esiste gia'\n");
@@ -96,30 +118,32 @@ public class UserAuthenticationManager {
 
         user.setUserId(str);
 
-        System.out.print("Inserisci la tua password: ");
+        do{
 
-        str = in.nextLine(); //controlli?
-        str = TextUtils.stripCommas(str);
+            System.out.print("Inserisci la tua password: ");
+
+            str = in.nextLine(); 
+            str = TextUtils.stripCommas(str);
+
+            if (TextUtils.isEmptyString(str)){TextUtils.printErrorMessage("E' stata immessa una password vuot.a", true);}
+
+        } while (TextUtils.isEmptyString(str));
 
         user.setPassword(str);
+
+        TextUtils.printLogo(REGISTRATION, REGISTRATION_PADDING);
 
         System.out.println("Confermare i dati inseriti: \n");
 
         System.out.println(user.toString());
 
-        do{
+        System.out.print("\nConferma? (s/n): ");
 
-            System.out.print("\nConferma? (s/n): ");
+        boolean answer = TextUtils.readYesOrNo();
 
-            str = in.nextLine();
-
-        } while (!str.toLowerCase().equals("s") && !str.toLowerCase().equals("n"));
-
-        if(str.toLowerCase().equals("s")){
+        if(answer){
 
             System.out.println("\nRegistrazione avvenuta con successo\n");
-
-            in.close();
 
             writeUserToArchive(user);
 
@@ -128,8 +152,6 @@ public class UserAuthenticationManager {
         } else {
 
             System.out.println("\nRegistrazione annullata\n");
-
-            in.close();
 
             return null;
 
@@ -208,7 +230,40 @@ public class UserAuthenticationManager {
 
     }
 
-    public static boolean esiste(String user){
+    public static boolean esisteCF(String cf){
+
+        try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
+
+            String line;
+            int first = -1;
+
+            while ((line = br.readLine()) != null) {
+
+                first = line.indexOf(",")+1;
+
+                if(line.substring(first, line.indexOf(",", first)).equalsIgnoreCase(cf)){
+                   
+                   return true;
+
+                }
+
+            }
+
+        } catch (IOException e)  {
+
+            TextUtils.printErrorMessage("IO error:", true);
+
+            e.printStackTrace();
+
+            return true;
+
+        } 
+
+        return false;
+
+    }
+
+    public static boolean utenteEsiste(String user){
 
         try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
 

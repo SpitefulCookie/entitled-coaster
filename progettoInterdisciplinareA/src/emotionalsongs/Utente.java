@@ -195,12 +195,12 @@ public class Utente {
      */ 
     @Override
     public String toString() {
-        return this.nominativo + "\n" 
-        + this.codiceFiscale + "\n"
-        + this.indirizzo.toString() + "\n" 
-        + this.email + "\n" 
-        + this.userId + "\n" 
-        + this.password;
+        return "Nominativo: " + this.nominativo + "\n"
+        + "Codice Fiscale: " + this.codiceFiscale + "\n"
+        + "Indirizzo: " + this.indirizzo.toString() + "\n" 
+        + "Email: " +  this.email + "\n" 
+        + "Nome Utente: " + this.userId + "\n" 
+        + "Password: " + this.password;
     }
 
     public String toCSV() {

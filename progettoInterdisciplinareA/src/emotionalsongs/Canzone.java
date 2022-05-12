@@ -3,32 +3,22 @@ package emotionalsongs;
 class Canzone{
 
     private String titolo;
+    private String songUUID;
     private String autore;
     private int anno;
 
-    public Canzone(String[] input) throws SongNotValidException{
+    public Canzone(String titolo, String autore, int anno, String uuid){
 
-        if (input.length != 3) {
-            throw new SongNotValidException(input.length);
-        } else{
-
-            this.titolo = input[0];
-            this.autore = input[1];
-            this.anno = Integer.parseInt(input[2]);
-
-        }
-
-    }
-
-    public Canzone(String titolo, String autore, int anno){
-
+        this.songUUID = uuid;
         this.titolo = titolo;
         this.autore = autore;
         this.anno = anno;
 
     }
 
-    public Canzone(String dati){ //ottimizzabile
+    public Canzone(String dati){
+
+        String[] val;
 
         if(dati.contains("\"")){
 
@@ -64,26 +54,21 @@ class Canzone{
 
             } while (last != -1 && begin != -1);
                         
-            String[] val = result.split(",");
+            val = result.split(",");
 
             for(int i=0; i<val.length; i++){val[i] = val[i].replace("§", ",");}
-    
-            this.titolo = val[1];
-            this.autore = val[2];
-            this.anno = Integer.parseInt(val[3]);
 
-        } else{
 
-            String[] val = dati.split(",");
+        } else{val = dati.split(",");}
 
-            this.titolo = val[1];
-            this.autore = val[2];
-            this.anno = Integer.parseInt(val[3]);
+        this.songUUID = val[0];
+        this.titolo = val[1];
+        this.autore = val[2];
+        this.anno = Integer.parseInt(val[3]);
 
-        }       
-        
     }
 
+    public String getSongUUID(){return this.songUUID;}
     public String getAutore(){return this.autore;}
     public String getTitolo(){return this.titolo;}
     public int getAnno(){return this.anno;}
@@ -91,22 +76,6 @@ class Canzone{
     @Override
     public String toString(){
         return this.titolo + " - " + this.autore + " (" + this.anno + ")";
-    }
-
-}
-
-class SongNotValidException extends Exception{
-
-    public SongNotValidException(int num){
-
-        super("Input non valido. Sono stati forniti " + num + " valori, mentre sono richiesti 3.");
-
-    }
-
-    public SongNotValidException(String msg){
-
-        super(msg);
-
     }
 
 }

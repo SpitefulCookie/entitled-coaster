@@ -2,8 +2,6 @@ package emotionalsongs;
 
 import java.util.Scanner;
 
-//import java.util.List;
-
 /*
  * Progetto svolto da:
  * 
@@ -18,13 +16,20 @@ public class EmotionalSongs{
 
         if(args.length!=0) TextUtils.setDebug(args[0]);
 
-        RepositoryManager songRepository = new RepositoryManager();
+        SongRepositoryManager songRepository = new SongRepositoryManager();
         Scanner in = TextUtils.getScanner();
+
+        TextUtils.setDebug(true);
+
+        EmotionsRepositoryManager emotionRepository = new EmotionsRepositoryManager();
+        emotionRepository.viewSongSummary(new Canzone("d5b971ee-fcad-3b4b-8964-41515059d558,The sun,Me!,2022"));
+        
+        TextUtils.pause();
 
         Utente loggedUser = null;
         String input;
 
-        TextUtils.setDebug(true);
+        //TextUtils.printDebug(Emotions.values()[4].name() +": " + Emotions.CLAMNESS.toString() + " - " + Emotions.CLAMNESS.description());
 
         boolean exit = false;
 

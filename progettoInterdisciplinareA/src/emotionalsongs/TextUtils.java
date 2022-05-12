@@ -1,8 +1,9 @@
 package emotionalsongs;
 
 import java.util.Scanner;
+import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;;
+import org.apache.commons.lang3.StringUtils;
 
 public class TextUtils {
 
@@ -180,7 +181,7 @@ public class TextUtils {
 
         TextUtils.cls();
 
-        System.out.println("\n\t\t== " + TextUtils.GREEN + "EM" + TextUtils.CYAN + "OT" + TextUtils.BLUE + "IO" + TextUtils.PURPLE +"NAL" +TextUtils.RED + " SO" + TextUtils.YELLOW + "NGS" + TextUtils.WHITE + " ==" + TextUtils.RESET);
+        System.out.println("\n\t\t══ " + TextUtils.GREEN + "EM" + TextUtils.CYAN + "OT" + TextUtils.BLUE + "IO" + TextUtils.PURPLE +"NAL" +TextUtils.RED + " SO" + TextUtils.YELLOW + "NGS" + TextUtils.WHITE + " ══" + TextUtils.RESET);
 
         if(subtitle != null){ 
             System.out.println("\t" + TextUtils.BLUE + "\t"+ StringUtils.repeat(" ", padding) + subtitle.toUpperCase() + TextUtils.WHITE_BOLD);
@@ -209,8 +210,36 @@ public class TextUtils {
     }
 
     public static void pause(){
-        System.out.print(" Premere un tasto per continuare...");
+        System.out.print(" Premere invio per continuare...");
         TextUtils.getScanner().nextLine();
+    }
+
+    public static String generateUUID(String in){return UUID.nameUUIDFromBytes(in.getBytes()).toString();}
+
+    public static String getBarColor(int intensity){
+        
+        switch (intensity) {
+            case 0: 
+            case 1:
+
+                return TextUtils.RED;
+
+            case 2: 
+            case 3:
+                
+                return TextUtils.YELLOW;
+
+            case 4:
+                
+                return TextUtils.GREEN;
+
+            case 5:
+                
+                return TextUtils.CYAN;
+        
+            default:
+                return TextUtils.WHITE;
+        }
     }
 }
 

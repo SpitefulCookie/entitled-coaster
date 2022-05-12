@@ -49,7 +49,7 @@ public class Playlist{
 
     public void addCanzone(Canzone canzone){this.canzoni.add(canzone);}
 
-    public static Playlist registraPlaylist(String userId, RepositoryManager repository){
+    public static Playlist registraPlaylist(String userId, SongRepositoryManager repository){
 
         // per creare una playlist l'utente registrato deve inserire il nome della playlist e l'elenco di brani da aggiungere. o brani singoli o brani di un autore specifico
         TextUtils.printLogo(CREAZIONE_PLAYLIST, 2);

@@ -1,0 +1,6 @@
+username: test
+password: test
+
+-----
+
+Per testare il prospetto riassuntivo si consiglia di utilizzare la canzone "Test Pattern" di "Greg Osby" e NON l'omonima canzone di "Born Against".

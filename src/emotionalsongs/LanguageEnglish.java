@@ -1,0 +1,195 @@
+package emotionalsongs;
+
+import java.util.ListResourceBundle;
+
+/*
+ * Progetto svolto da: 
+ * 
+ * Della Chiesa Mattia 749904, Ateneo di Varese
+ * 
+ */
+
+/**
+ * Classe che contiene le traduzioni delle parole chiave in lingua Inglese
+*/
+public class LanguageEnglish extends ListResourceBundle{
+
+    /**
+     * Returns an array in which each item is a pair of objects in an
+     * {@code Object} array. The first element of each pair is
+     * the key, which must be a {@code String}, and the second
+     * element is the value associated with that key.  See the class
+     * description for details.
+     *
+     * @return an array of an {@code Object} array representing a
+     * key-value pair.
+     */
+    protected Object[][] getContents() {
+
+        return new Object[][] {
+
+            {"Address", " Address: "},
+            {"CancelPlaylistWithSongs", " The playlist contains %s songs: \n"},
+            {"CancelEmotionRegistrationPrompt", " Do you want to interrupt the feedback registration? Unsaved data will be lost. s/n \n"},
+            {"CF", " Fiscal code: "},
+            {"Choice", " \n" + TextUtils.WHITE + " Choice: " + TextUtils.RESET},
+            {"ChosenEmotion", " Emotion chosen: \n\n \t"},
+            {"ChosenSongIsAlreadyInPlaylist", " The chosen song is already present in the playlist."},
+            {"CommentsLeftByUser", " Comments left by"},
+            {"CompleteFeedbackPrompt", " Do you want to complete the feedback process for this playlist? s/n"},
+            {"Confirm", " \n Confirm? (s/n): "},
+            {"ConfirmData", " Confirm the data entered: "},
+            {"ContinueAddingSongsPrompt", " \n Continue entering songs? s/n"},
+            {"CreatePlaylist", " Create Playlist"},
+            {"CreatePlaylistSubtitle", " CREATION PLAYLIST"},
+            {"DEBUG_BeginEmotionRepositoryInitialization", "Initializing the emotion repository..."},
+            {"DEBUG_BeginSongRepositoryInitialization", "Initializing the song repository..."},
+            {"DEBUG_CFContainsInvalidCharacters", "The fiscal code contains illegal characters."},
+            {"DEBUG_CFHasFailedChecksum", "The fiscal code has failed the checksum."},
+            {"DEBUG_CFIsValid", "The fiscal code is valid."},
+            {"DEBUG_ClearScreen", "A cls() occurs at this point"},
+            {"DEBUG_CommaFound", "A string containing a comma was found."},
+            {"DEBUG_CurrentlyUsedMemory", "Currently used memory: "},
+            {"DEBUG_DebugModeDisabled", "Debug mode has been disabled. \n"},
+            {"DEBUG_DebugModeEnabled", "Debug mode has been activated. \n"},
+            {"DEBUG_EmotionsInRepository", "The emotion repository contains %s entry."},
+            {"DEBUG_ExceptionWhileClosingCMD", "Exception caught while trying to close command prompt."},
+            {"DEBUG_FileNotFound", "The file %s was not found, a new one was created."},
+            {"DEBUG_NumberOfResultsFound", "%s results were found"},
+            {"DEBUG_NumberOfResultsKept", "The first %s of these results have been kept"},
+            {"DEBUG_PlaylistBuildSuccess", "Playlist built correctly!"},
+            {"DEBUG_ProcessDuration", "Time taken: "},
+            {"DEBUG_RepositoryBuildSuccess", "Repository built correctly!"},
+            {"DEBUG_ResultsObtained", "Results obtained: "},
+            {"DEBUG_Score", "Score: "},
+            {"DEBUG_SearchByTitleCompleted", "Search by title completed! \n\t %s results were found."},
+            {"DEBUG_SongTitleBeingSearched", "I'm searching for the song: "},
+            {"DEBUG_SongsInRepository", "The song repository contains %s entries."},
+            {"DEBUG_UserAlreadyProvidedFeedback", "User %s has already provided feedback on item [%s] the emotions felt have been overwritten!"},
+            {"DEBUG_UserCSV", "User's CSV: "},
+            {"Email", " Email: "},
+            {"EmotionsListColored", TextUtils.GREEN + "Amazement" + TextUtils.RESET + ", " + TextUtils.RESET + "Solemnity" + TextUtils.RESET + ", " + TextUtils.PURPLE + "Tenderness" + TextUtils.RESET + ", " + TextUtils.BLUE + "Nostalgia" + TextUtils.RESET + ", " + TextUtils.CYAN + "Calmness" + TextUtils.RESET + ", " + TextUtils.RED + "Power" + TextUtils.RESET + ", " + TextUtils.YELLOW + "Joy" + TextUtils.RESET + " , " + TextUtils.RED +" Tension "+ TextUtils.RESET +", " + TextUtils.BLUE +" Sadness "+ TextUtils.RESET +". "},
+            {"EmotionsFeltForSong", " Emotions felt for the song: \n\n\t\t "},
+            {"EmotionsSelection", " \n To interrupt the process use the command '" + TextUtils.RED + "cancel" + TextUtils.RESET + "', or '" + TextUtils.GREEN + "save" + TextUtils.RESET + "' to save your feedback. \n The data entered can be modified several times before saving.\n "},
+            {"ERROR_CannotRetrieveElementFromRepository", " Unable to retrieve element."},
+            {"ERROR_CFAlreadyInUse", " There's already a user with that fiscal code. If that's you please login."},
+            {"ERROR_CFMustBe16CharLong", " The fiscal code must be 16 characters long."},
+            {"ERROR_FileNotFoundExceptionOnSaveFeedback", " An error was detected while saving, please contact technical support. \n Error: FileNotFoundException on saveFeedback"},
+            {"ERROR_GenericIOError", " An error has been detected, please contact technical support. \n Error: IOException"},
+            {"ERROR_InvalidAddress", " Invalid address. %s values were provided, %s are required."},
+            {"ERROR_InvalidAddressPrompt", " Invalid address. Re-enter: "},
+            {"ERROR_InvalidCF", " The value entered does not represent a regular fiscal code."},
+            {"ERROR_InvalidEmailAddressPrompt ", " The email address entered is not valid \n Re-enter: "},
+            {"ERROR_InvalidInput", " The entered value is not valid."},
+            {"ERROR_InvalidInputFormat", " The entered value does not meet the required specifications."},
+            {"ERROR_InvalidInputPrompt", " The value entered is not valid. Enter again: "},
+            {"ERROR_InvalidIntegerInputPrompt", " The value entered is not an integer. Re-enter: "},
+            {"ERROR_InvalidSongUUID", " UUID not present in the song repository."},
+            {"ERROR_IOExceptionBuildPlaylist", " An error has been detected while creating the emotions repository, please contact technical support. \n Error: IOException on BuildPlaylist"},
+            {"ERROR_IOExceptionBuildEmotionRepo", " An error was detected during startup, please contact technical support. \n Error: IOException while building the emotions repository"},
+            {"ERROR_IOExceptionOnSaveFeedback", " An error was detected while saving, please contact technical support. \n Error: IOException on saveFeedback"},
+            {"ERROR_LanguageNotSupported", " The entered language is not supported or was not recognized"},
+            {"ERROR_LoginFailed", " An error was detected during the login phase, please contact user support. \n \t Error detected: AddressNotValid on login \n"},
+            {"ERROR_NoFeedbackPresent", " You must enter at least one rating before saving your feedback"},
+            {"ERROR_NoPlaylistsPresent"," There are no playlists in the archive. Before using this feature you must create a new playlist."},
+            {"ERROR_NoMoreComments", " There are no more comments."},
+            {"ERROR_NoPreviousPages", " There aren't previous pages."},
+            {"ERROR_NoNextPages", " There aren't other pages."},
+            {"ERROR_NotAllFieldCompiled", " Not all fields have been filled in"},
+            {"ERROR_PasswordIsEmpty", " A blank password was entered."},
+            {"ERROR_Tag", "ERROR"},
+            {"ERROR_UnrecognizedCommand", " The command entered was not recognized."},
+            {"ERROR_UnrecognizedCommandPrompt", " The command entered was not recognized. Enter again: "},
+            {"ERROR_UserArchiveNotFound", " Unable to login, user archive could not be found."},
+            {"ERROR_UsernameAlreadyExistsPrompt", " The entered username already exists. Re-enter: "},
+            {"ERROR_ValueIsNullOrInvalidPrompt", " A null or invalid value was entered, re-enter: "},
+            {"ERROR_ValueMustBeInsideIntervalPrompt", " The value must be between %s and %s."},
+            {"ERROR_ValueMustBeInsideIntervalPrompt", " The value must be between %s and %s. Re-enter: "},
+            {"FeedbackRegistered", TextUtils.GREEN + "Feedback registered" + TextUtils.RESET + "!"},
+            {"IncorrectLogin", " Wrong username or password!"},
+            {"GoodbyeMessage", " Thank you for using our platform!"},
+            {"InsertAddressInFormat", " Insert your address in the format: \n \t <Name of the street / square>, <house number>, <postal code>, <city>, <province> \n Address: "},
+            {"InsertAuthorName", " Insert author name: "},
+            {"InsertCF", " Insert your fiscal code: "},
+            {"InsertComment", " Tell us why the song \" %s \"makes you feel %s: " + TextUtils.RESET + "\n\n "},
+            {"InsertCommentPrompt", " Do you want to add a comment to the rating associated with this emotion? s/n"},
+            {"InsertEmail", " Insert your email address: "},
+            {"InsertNameSurname", " Insert your name and surname separated by a space: "},
+            {"InsertPlaylistName", " Insert playlist name: "},
+            {"InsertPlaylistEmotionsPrompt", " \n Do you want to record emotions associated with songs in the playlist? s/n"},
+            {"InsertPassword", " Insert password: "},
+            {"InsertSongTitle", " Insert song title: "},
+            {"InsertUsername", " Insert username: "},
+            {"InsertYearOfRelease", " Insert the release year: "},
+            {"LanguageOptionsSubtitle", " LANGUAGE OPTIONS"},
+            {"ListCommandsViewSongEmotion", " \n If you want to view the comments left by other users on this song enter \n the command '" + TextUtils.YELLOW + "show comments" + TextUtils.RESET + "'. If instead you'd like to register the emotions felt while listening this song \n enter the command '"+ TextUtils.GREEN +"register emotions"+ TextUtils.RESET +"' otherwise enter '"+ TextUtils.RED +"cancel"+ TextUtils.RESET +"' to go back. "} ,
+            {"ListOfSongsInPlaylist", " List of songs in the playlist '" + TextUtils.YELLOW + " %s" + TextUtils.RESET + "': \n"},
+            {"LoginRequired", " To use this feature you must login first."},
+            {"MenuSelection", " Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to select the desired option; enter the command '"+ TextUtils.GREEN +"change language"+ TextUtils.RESET +"' to\n change the application language, or '"+ TextUtils.RED +"exit"+ TextUtils.RESET +"' to close the application. "},
+            {"MenuSubtitle", " MAIN MENU"},
+            {"MenuOption1", " Information"},
+            {"MenuOption2", " Browse songs repository"},
+            {"MenuOption3", " Login"},
+            {"MenuOption3_1", " Log out"},
+            {"MenuOption4", " Sign up"},
+            {"MenuOption5", " My Playlists"},
+            {"MyPlaylistSubtitle", " MY PLAYLISTS"},
+            {"Name", " Name: "},
+            {"NavigateResults", " \n Enter the commands'" + TextUtils.GREEN + "next" + TextUtils.RESET + "' and '" + TextUtils.CYAN + "previous" + TextUtils.RESET + "'to navigate through the results or'" + TextUtils.RED + "cancel" + TextUtils.RESET + "'to go back."},
+            {"NoPlaylistPresentInArchive", " \t There are no playlists in the archive."},
+            {"NoSongCommentsFound", " Sorry, no one left comments for this song."},
+            {"NoSearchResultsYielded", " No songs were found in the repository. \n Do you want to do another search? s/n"},
+            {"NoSearchResultsYieldedForKeywords", " No songs were have met your search criteria or too many results were returned (use a narrower criteria). \n Do you want to do another search? s/n"},
+            {"NoEmotionsRegisteredForSong", " There are no recorded emotions for the song: "},
+            {"NoEmotionsRegisteredForSongPromptUser", " No emotions have been entered for this song yet, would you like to do it now? s/n"},
+            {"OptionSelection", " Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to select the desired option or '" + TextUtils.RED + "cancel" + TextUtils.RESET + "' to go back."},
+            {"PageCounter", " [Page %s of %s]"},
+            {"Password", " Password: "},
+            {"PlaylistCreationAborted", " Playlist creation canceled!"},
+            {"PlaylistHasBeenCreated", " The playlist has been created!"},
+            {"PlaylistSelection", " Enter a " + TextUtils.YELLOW +"number"+TextUtils.RESET+" to select the playlist, '" + TextUtils.GREEN + "next" + TextUtils.RESET + "' o '" + TextUtils.CYAN + "previous" + TextUtils.RESET + "' to \n navigate between the results pages or '"+ TextUtils.RED +"cancel"+ TextUtils.RESET +"' to go back. "},
+            {"PlaylistSuccessfullySaved", " The playlist was successfully saved!"},
+            {"PressEnterToContinue", " Press enter to continue..."},
+            {"ProjectInfoSubtitle", "THE PROJECT"},
+            {"ProjectInfo1", " From the Greek dances to the medieval hymns and antiphons; from the ars nova of the 1300's to the romantic season of the age of Enlightenment. Over the course of the various millennia, human beings have developed an immense fascination with music to the point where, in Romanticism, it became a pure and absolute language capable of expressing universal concepts and to draw directly from the \"ineffable \" and the \"infinity\".\n One of the main reasons linked to this universal appeal lies in the immense emotional heritage that music offers to all its listeners. With this in mind, the purpose of this platform is to collect and catalog the emotional sensations experienced by our users while listening to music using the model defined by the Geneva Emotional Music Scale (GEMS): a factorial scale that divides the emotions felt by the user into nine categories of emotions: "},
+            {"ProjectInfo2", " Through our platform, our users will be able to create their own playlists and populate them with one or more songs from a vast repository containing more than 380,000 songs. Each one of these songs can be annotated with emotional tags that describe the feelings perceived while listening to the song and, for each of these tags, the user will have the option to include a comment that'll give other users of the platform the chance to have an insigth on the introspectives of others and how these can be affected by the events characterizing one's past."},
+            {"PromptUserToModifyComment", " \n\n Do you want to change it? s/n"},
+            {"PromptUserToRegisterAccount"," If you would like to be the first one to register the emotions you felt while listening to this song,\n sign in or register to the platform!"},
+            {"PromptUserToRegisterEmotions", " Would you like to record the emotions you felt while listening to this song? s/n"},
+            {"PromptPreserveProgressInPlaylistCreation", " Do you want to keep them and create the playlist? s/n"},
+            {"PromptReturn", " Do you want to go back? s/n"},
+            {"RateEmotion", " \n On a scale of 1 (" + TextUtils.RED + "not at all" + TextUtils.RESET + ") to 5 (" + TextUtils.GREEN + "a lot" + TextUtils.RESET + "), how much is Was this emotion felt while listening to the song? "},
+            {"RegisterEmotionSubtitle", " REGISTER EMOTION"},
+            {"RegisteringEmotionsForSong", " The emotions felt for the song are being recorded: " + TextUtils.YELLOW + " %s" + TextUtils.RESET + "\n Select the emotion felt while listening to the song: \n \t "},
+            {"RegistrationCancelled", " \n Registration canceled \n"},
+            {"RegistrationNecessary", " \n\n Before using this feature you must create a new playlist."},
+            {"RegistrationSubtitle", "REGISTRAZIONE"},
+            {"RegistrationSucceeded", " \n Registration successful \n"},
+            {"RequestConfirmation", " Confirm? s/n"},
+            {"SearchSelectionMethod", " %1$s [" + TextUtils.BLUE + "1" + TextUtils.RESET + "] Search by title \n%1$s  [" + TextUtils.BLUE + "2" + TextUtils.RESET + "] Search by author and year \n\n Enter a "+ TextUtils.YELLOW +"number"+ TextUtils.RESET +" to select the search method or enter '"+ TextUtils.RED +"cancel"+ TextUtils.RESET +"' to go back. "},
+            {"SearchSongSubtitle", " SEARCH SONGS"},
+            {"SelectPlaylistSubtitle", "SELECT PLAYLIST"},
+            {"SongDetailsSubtitle", " SONG DETAILS"},
+            {"SongHasBeenAddedToPlaylist", " The song \"%s\"has been added to the playlist!"},
+            {"SongSelection", " Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to select the song, '" + TextUtils.GREEN + "next" + TextUtils.RESET + "' o '" + TextUtils.CYAN + "previous "+ TextUtils.RESET +" 'to navigate \n the result pages or' "+ TextUtils.RED +"cancel"+ TextUtils.RESET +" 'to go back. "},
+            {"SongSelectionEcho", " The song has been chosen: "},
+            {"SongSelectionFromPlaylist", " Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to view the emotions felt for a song, '" + TextUtils.GREEN + "next" + TextUtils.RESET + "' o '" + TextUtils.CYAN + "previous" + TextUtils.RESET + "'to \n navigate through the result pages or'" + TextUtils.YELLOW + "complete" + TextUtils.RESET + "'to complete the process."},
+            {"SongSelectionFromPlaylistFeedback", " Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to enter the emotions felt for a song, '" + TextUtils.GREEN + "next" + TextUtils.RESET + "' o '" + TextUtils.CYAN + "previous" + TextUtils.RESET + "'to \n browse through the result pages or'" + TextUtils.YELLOW + "complete" + TextUtils.RESET + "'to complete the process."},
+            {"SongsInPlaylist", " Songs currently in the playlist: \n\n "},
+            {"SupportedLanguagesOptions", " Supported languages: \n\n %1$s[" + TextUtils.BLUE + "1" + TextUtils.RESET + "] Italiano \n%1$s [" + TextUtils.BLUE + "2" + TextUtils.RESET + "] English \n\n Enter a " + TextUtils.YELLOW + "number" + TextUtils.RESET + " to select the desired language."},
+            {"UserLoginSubtitle", " USER LOGIN"},
+            {"Username", " Username: "},
+            {"UserLogout", " You have logged out!"},
+            {"VerifyANSISupport", " Does the logo above appear without colours or includes unintelligible characters? y/n\n Choice: "},
+            {"ViewPlaylist", " Consult Playlist"},
+            {"ViewPlaylistSubtitle", " CONSULT PLAYLIST"},
+            {"WARNING_FeedbackWillBeOverriden", " [" + TextUtils.YELLOW + "ATTENTION" + TextUtils.RESET + "] You have already provided a feedback for this song. By continuing, your previous feedback will be overwritten. Do you want to continue? s/n"},
+            {"WARNING_CommentExceedsCharacterLimit", " [" + TextUtils.YELLOW + "ATTENTION" + TextUtils.RESET + "] The comment entered exceeds the limit of 256 characters and will appear like this: "},
+            {"WelcomeUserOnLogin", TextUtils.GREEN + "\n Login successful, welcome back %s! \n" + TextUtils.RESET}
+
+       };
+
+    }
+
+}
+            

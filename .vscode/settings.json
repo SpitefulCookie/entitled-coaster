@@ -1,8 +1,0 @@
-{
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\Clookie\\Sync\\Università\\Laboratorio Interdisciplinare A\\libs\\commons-lang3-3.12.0\\commons-lang3-3.12.0.jar",
-        "progettoInterdisciplinareA/lib/commons-lang3-3.12.0/commons-lang3-3.12.0.jar",
-        "c:\\Users\\orobi\\Desktop\\commons-lang3-3.12.0\\commons-lang3-3.12.0.jar"
-    ]
-}
